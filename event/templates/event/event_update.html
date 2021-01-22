@@ -1,0 +1,27 @@
+{% extends "event/base.html" %}
+{% block content %}
+
+<h1 style="text-align: center;"><b>Update Event</b></h1>
+<br />
+<form action="/event_view/" method="POST">
+    {%csrf_token%}
+    organizer:<input type="text" name="organizer" placeholder="User namae of Organizer" value="{{obj.organizer}}"><br />
+    title :<input type="text" name="event_title" placeholder="Title" value="{{obj.title}}"><br />
+    description :<input type="text" name="description" placeholder="Description" value="{{obj.description}}"><br />
+    venue :<input type="text" name="venue" placeholder="venue" value="{{obj.venue}}"><br />
+    Category :<input type="text" name="Category" placeholder="Category" value="{{obj.Category}}"><br />
+    Starting date :<input type="date" name="starting_date" placeholder="starting date"
+        value="{{obj.StartingDate}}"><br />
+    Ending date<input type="date" name="ending_date" placeholder="starting date" value="{{obj.Endingdate}}"><br />
+    Eventtime :<input type="time" name="duration" value="{{obj.Eventtime}}"><br />
+    joiningfees :<input type="number" name="fee" value="{{obj.joiningfees}}"><br />
+    pricemoney :<input type="number" name="price" value="{{obj.pricemoney}}"><br />
+    Number of members per team :<input type="number" name="numberofparticipants" placeholder="number of participants"
+        value="{{obj.members}}"><br />
+    Registration link :<input type="url" name="link" placeholder="Add Link" value="{{obj.link}}"><br />
+    Number of Seats :<input type="number" name="numberofseats" placeholder="Total seats"
+        value="{{obj.numberofseats}}"><br />
+    <br />
+    <input type="submit" name="Update" value="Update">
+</form>
+{% endblock content %}
