@@ -18,9 +18,9 @@
     {% for events in eventlist %}
     <tr>
       <th scope="row"><a href="event_details/{{events.id}}">{{events.id}}</a></th>
-      <td>{{events.title}}</a></td>
+      <td><a href="event_details/{{events.id}}">{{events.title}}</a></td>
       <td>{{events.pricemoney}}</td>
-      <td>{{events.StartingDate|date:"F d,Y"}}</td>
+      <td>{{events.StartingDate}}</td>
       <td>{{events.numberofseats}}</td>
     </tr>
     {% endfor %}

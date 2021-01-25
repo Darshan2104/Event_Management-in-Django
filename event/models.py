@@ -15,8 +15,8 @@ class Eventlist(models.Model):
     link = models.CharField(max_length=100)
     Eventtime = models.CharField(max_length=20)
     venue = models.TextField()
-    StartingDate = models.DateField(blank=False, null=True)
-    Endingdate = models.DateField(blank=False, null=True)
+    StartingDate = models.DateTimeField(blank=False, null=True)
+    Endingdate = models.DateTimeField(blank=False, null=True)
     Category = models.CharField(max_length=50, default="")
     numberofseats = models.CharField(max_length=50, null=True)
 
