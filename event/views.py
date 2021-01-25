@@ -7,6 +7,7 @@ from .models import Eventlist
 # from  django.views.generic import ListView
 
 # Create your views here.
+# git testing
 
 
 def home(request):
