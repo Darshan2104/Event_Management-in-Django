@@ -1,6 +1,12 @@
 {% extends "event/base.html" %}
 {% block content %}
 <div class="container-fluid">
+
+    <form action="/booked/{{obj.id}}" method="POST">
+        {%csrf_token%}
+        <input type="submit" class="btn btn-primary btn-block" name="BookThis" value="Book Now">
+    </form>
+    <br />
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
@@ -10,6 +16,7 @@
                 <br />
             </div>
             <h1 style="text-align: center;">{{ obj.title}}</a></h1>
+
             Organizer :<p class="article-content">{{ obj.organizer }}</p>
             Description:<p class="article-content">{{ obj.description }}</p>
             joiningfees:<p class="article-content">{{ obj.joiningfees }}</p>
@@ -22,7 +29,11 @@
             Event Ending Date:<p class="article-content">{{ obj.Endingdate|date:"F d,Y" }}</p>
             Category:<p class="article-content">{{ obj.Category }}</p>
             Number of Seats<p class="article-content">{{ obj.numberofseats }}</p>
+
         </div>
+
     </article>
+
 </div>
+
 {% endblock content %}

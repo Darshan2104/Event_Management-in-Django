@@ -18,8 +18,8 @@
   <tbody>
     {% for events in obj %}
     <tr>
-      <th scope="row"><a href="/event_details/{{events.id}}">{{events.id}}</a></th>
-      <td><a href="/event_details/{{events.id}}">{{events.title}}</a></td>
+      <th scope="row"><a href="/event_user/{{events.id}}">{{events.id}}</a></th>
+      <td><a href="/event_user/{{events.id}}">{{events.title}}</a></td>
       <td>{{events.Category}}</td>
       <td>{{events.StartingDate|date:"F d,Y"}}</td>
       <td>

@@ -22,3 +22,14 @@ class Eventlist(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class EventBook(models.Model):
+    userid = models.CharField(max_length=100)
+    eventid = models.CharField(max_length=100)
+    booking = models.BooleanField(default=False)
+    booking_confirmed = models.BooleanField(default=False)
+    attended = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'user id : {self.userid}'

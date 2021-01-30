@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .models import Eventlist
+from .models import Eventlist, EventBook
 
 # from event.form import EventForm
 # from django.views.generic.edit import FormView
@@ -92,3 +92,50 @@ def event_details(request, my_id):
 def user_details(request, username):
     obj = User.objects.get(username=username)
     return render(request, 'event/userdetail.html', {'obj': obj})
+
+
+@login_required
+def book_request(request, e_id):
+    requsrid = request.user.id
+    obj = EventBook.objects.filter(userid=requsrid, eventid=e_id)
+# if empty then and then add new obj
+    if obj:
+        return redirect('/')
+    else:
+        eventid = e_id
+        book = True
+        obj = EventBook(userid=requsrid, eventid=eventid, booking=book)
+        obj.save()
+        return redirect('/')
+
+
+def event_user(request, event_id):
+    obj = EventBook.objects.filter(eventid=event_id)
+    eventdetail = Eventlist.objects.filter(id=event_id)
+    userdetail = User.objects.filter()
+    eventid = event_id
+    return render(request, 'event/manageEventUser.html', {'obj': obj, 'eventdetail': eventdetail, 'userdetail': userdetail, 'eventid': eventid})
+
+
+def event_user_conformation(request, event_id, user_id):
+    obj = EventBook.objects.filter(
+        userid=user_id, eventid=event_id).update(booking_confirmed=True)
+    return redirect('event_user', event_id=str(event_id))
+
+
+def event_user_unbooked(request, event_id, user_id):
+    obj = EventBook.objects.filter(
+        userid=user_id, eventid=event_id).update(booking=False)
+    return redirect('event_user', event_id=str(event_id))
+
+
+def event_user_attended(request, event_id, user_id):
+    obj = EventBook.objects.filter(
+        userid=user_id, eventid=event_id).update(attended=True)
+    return redirect('event_user', event_id=str(event_id))
+
+
+def event_user_certified(request, event_id, user_id):
+    obj = EventBook.objects.filter(userid=user_id, eventid=event_id)
+    # obj.save()
+    return redirect('event_user', event_id=str(event_id))
