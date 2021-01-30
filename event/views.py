@@ -125,7 +125,7 @@ def event_user_conformation(request, event_id, user_id):
 
 def event_user_unbooked(request, event_id, user_id):
     obj = EventBook.objects.filter(
-        userid=user_id, eventid=event_id).update(booking=False)
+        userid=user_id, eventid=event_id).update(booking=False, booking_confirmed=False, attended=False)
     return redirect('event_user', event_id=str(event_id))
 
 
