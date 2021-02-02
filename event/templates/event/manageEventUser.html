@@ -7,7 +7,7 @@
 
 {% for e in eventdetail %}
 {% if e.id == eventid %}
-<h1 style="text-align: center;">Users of <b>{{e.title}}</b> Event </h1>
+<h1 style="text-align: center;"><u>Users of <b>{{e.title}}</b> Event</u> </h1>
 {% endif %}
 {% endfor%}
 
@@ -65,18 +65,24 @@
             </td>
 
             <td>
-                <form id="form" action="/event_user/{{eventid}}/{{u.userid}}/certified" method="POST">
+                <form id="form" enctype="multipart/form-data" action="/event_user/{{eventid}}/{{u.userid}}/certified"
+                    method="POST">
                     {%csrf_token%}
-                    <input type="file" id="file" name="myfile" value="">
+                    {% if u.certificate %}
+                    <input type="file" id="file" name="myfile" data-toggle="tooltip"
+                        title="Certificate already uploaded" disabled>
+                    <!-- <img src="{{u.certificate.url}}"> -->
+                    {% else %}
+                    <input type="file" id="file" name="myfile">
+                    {% endif %}
                 </form>
             </td>
 
-
         </tr>
         {% endfor %}
-
     </tbody>
 </table>
+
 <script>
     document.getElementById("file").onchange = function () {
         document.getElementById("form").submit();

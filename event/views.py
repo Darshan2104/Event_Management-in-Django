@@ -76,7 +76,9 @@ def event_updated(request, my_id):
 @login_required
 def event_delete(request, my_id):
     obj = get_object_or_404(Eventlist, id=my_id)
+    obj1 = get_object_or_404(EventBook, eventid=my_id)
     obj.delete()
+    obj1.delete()
     return redirect('/event_view')
 
 
@@ -118,24 +120,27 @@ def event_user(request, event_id):
 
 
 def event_user_conformation(request, event_id, user_id):
-    obj = EventBook.objects.filter(
+    EventBook.objects.filter(
         userid=user_id, eventid=event_id).update(booking_confirmed=True)
     return redirect('event_user', event_id=str(event_id))
 
 
 def event_user_unbooked(request, event_id, user_id):
-    obj = EventBook.objects.filter(
-        userid=user_id, eventid=event_id).update(booking=True, booking_confirmed=False, attended=False)
+    EventBook.objects.filter(
+        userid=user_id, eventid=event_id).update(booking=True, booking_confirmed=False, attended=False, certificate='')
     return redirect('event_user', event_id=str(event_id))
 
 
 def event_user_attended(request, event_id, user_id):
-    obj = EventBook.objects.filter(
+    EventBook.objects.filter(
         userid=user_id, eventid=event_id).update(attended=True)
     return redirect('event_user', event_id=str(event_id))
 
 
 def event_user_certified(request, event_id, user_id):
-    obj = EventBook.objects.filter(userid=user_id, eventid=event_id)
-    # obj.save()
+    img = request.FILES['myfile']  # after 1hr this query get solved !!!!!
+    obj = EventBook.objects.get(
+        userid=user_id, eventid=event_id)
+    obj.certificate = img
+    obj.save()
     return redirect('event_user', event_id=str(event_id))
