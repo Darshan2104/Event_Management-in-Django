@@ -18,8 +18,8 @@
         <tr>
             <th scope="col">UserID</th>
             <th scope="col">Confirmed Booking</th>
-            <th scope="col">Unbook</th>
             <th scope="col">Attended</th>
+            <th scope="col">Unbook</th>
             <th scope="col">Add Certificate</th>
             <!-- <th scope="col">Delete</th> -->
         </tr>
@@ -33,8 +33,27 @@
             <td>
                 <form action="/event_user/{{eventid}}/{{u.userid}}/conformed" method="POST">
                     {%csrf_token%}
+
+                    {% if u.booking_confirmed %}
+
+                    <input type="submit" class="btn btn-success" name="conform" value="Conform Him"
+                        data-toggle="tooltip" title="Click here to confirm booking" disabled>
+                    {% else %}
                     <input type="submit" class="btn btn-success" name="conform" value="Conform Him"
                         data-toggle="tooltip" title="Click here to confirm booking">
+                    {% endif %}
+                </form>
+            </td>
+            <td>
+                <form action="/event_user/{{eventid}}/{{u.userid}}/attended" method="POST">
+                    {%csrf_token%}
+                    {% if u.attended %}
+                    <input type="submit" class="btn btn-primary" name="attended" value="Attended ?"
+                        data-toggle="tooltip" title="was user attend the event ? click here if TRUE " disabled>
+                    {%else%}
+                    <input type="submit" class="btn btn-primary" name="attended" value="Attended ?"
+                        data-toggle="tooltip" title="was user attend the event ? click here if TRUE ">
+                    {%endif%}
                 </form>
             </td>
             <td>
@@ -44,17 +63,11 @@
                         title="Click here to Unbook user for this event">
                 </form>
             </td>
-            <td>
-                <form action="/event_user/{{eventid}}/{{u.userid}}/attended" method="POST">
-                    {%csrf_token%}
-                    <input type="submit" class="btn btn-primary" name="attended" value="Attended ?"
-                        data-toggle="tooltip" title="was user attend the event ? click here if TRUE ">
-                </form>
-            </td>
+
             <td>
                 <form id="form" action="/event_user/{{eventid}}/{{u.userid}}/certified" method="POST">
                     {%csrf_token%}
-                    <input type="file" id="file" name="myfile">
+                    <input type="file" id="file" name="myfile" value="">
                 </form>
             </td>
 

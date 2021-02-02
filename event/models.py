@@ -30,6 +30,7 @@ class EventBook(models.Model):
     booking = models.BooleanField(default=False)
     booking_confirmed = models.BooleanField(default=False)
     attended = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return f'user id : {self.userid}'
