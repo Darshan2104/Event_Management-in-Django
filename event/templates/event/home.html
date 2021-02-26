@@ -1,6 +1,6 @@
 {% extends "event/base.html" %}
 {% block content %}
-
+<a href="my_event">My Events</a>
 <h1 style="text-align: center;">List of all the Events</h1>
 <br />
 <br />
@@ -17,8 +17,8 @@
   <tbody>
     {% for events in eventlist %}
     <tr>
-      <th scope="row"><a href="event_details/{{events.id}}">{{events.id}}</a></th>
-      <td><a href="event_details/{{events.id}}">{{events.title}}</a></td>
+      <th scope="row"><a href="/event_details/{{events.id}}">{{events.id}}</a></th>
+      <td><a href="/event_details/{{events.id}}">{{events.title}}</a></td>
       <td>{{events.pricemoney}}</td>
       <td>{{events.StartingDate}}</td>
       <td>{{events.numberofseats}}</td>

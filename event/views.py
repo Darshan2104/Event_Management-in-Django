@@ -88,7 +88,13 @@ def about(request):
 
 def event_details(request, my_id):
     obj = Eventlist.objects.get(id=my_id)
-    return render(request, 'event/event_details.html', {'obj': obj})
+    uid = request.user.id
+    try:
+        obj1 = EventBook.objects.get(eventid=my_id, userid=uid)
+    except EventBook.DoesNotExist:
+        obj1 = None
+
+    return render(request, 'event/event_details.html', {'obj': obj, 'obj1': obj1})
 
 
 def user_details(request, username):
@@ -138,9 +144,50 @@ def event_user_attended(request, event_id, user_id):
 
 
 def event_user_certified(request, event_id, user_id):
-    img = request.FILES['myfile']  # after 1hr this query get solved !!!!!
+    # after 1hr this query get solved !!!!! hahahha
+    img = request.FILES['myfile']
     obj = EventBook.objects.get(
         userid=user_id, eventid=event_id)
     obj.certificate = img
     obj.save()
     return redirect('event_user', event_id=str(event_id))
+
+
+def my_event(request):
+    return render(request, 'event/myevent.html')
+
+
+def my_event_requested(request):
+    uid = request.user.id
+    obj = EventBook.objects.filter(userid=uid, booking=True)
+    objl = []
+    for i in obj:
+        temp = Eventlist.objects.get(id=i.eventid)
+        objl.append(temp)
+
+    return render(request, 'event/my_event_requested.html', {'objl': objl})
+
+
+def my_event_conformed(request):
+    uid = request.user.id
+    obj = EventBook.objects.filter(userid=uid, booking_confirmed=True)
+    objl = []
+    for i in obj:
+        temp = Eventlist.objects.get(id=i.eventid)
+        objl.append(temp)
+
+    return render(request, 'event/my_event_conformed.html', {'objl': objl})
+
+
+def my_event_attended(request):
+    uid = request.user.id
+    obj = EventBook.objects.filter(userid=uid, attended=True)
+    objl = []
+
+    for i in obj:
+        temp = Eventlist.objects.get(id=i.eventid)
+        objl.append(temp)
+    mylist = zip(objl, obj)
+    for x in obj:
+        print(x.certificate.url)
+    return render(request, 'event/my_event_attended.html', {'mylist': mylist})

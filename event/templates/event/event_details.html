@@ -4,7 +4,18 @@
 
     <form action="/booked/{{obj.id}}" method="POST">
         {%csrf_token%}
+
+
+        {% if obj1 %}
+        {% if obj1.booking %}
+        <input type="submit" class="btn btn-primary btn-block" name="BookThis" value="Already Booked !!!" disabled>
+        {% else %}
         <input type="submit" class="btn btn-primary btn-block" name="BookThis" value="Book Now">
+        {% endif %}
+
+        {%else%}
+        <input type="submit" class="btn btn-primary btn-block" name="BookThis" value="Book Now">
+        {% endif %}
     </form>
     <br />
     <article class="media content-section">

@@ -3,10 +3,12 @@ from users import views as views1
 from . import views
 
 urlpatterns = [
+
     path('', views.home, name='event-home'),
     path('event_view/', views.event_view, name='event-view'),
     path('about/', views.about, name='event-about'),
     path('register/', views1.register, name='users-register'),
+
     # CRUD operation on Event
     path('event_view/add/', views.event_add, name='event_add'),
     path('event_view/<int:my_id>/update',
@@ -19,6 +21,7 @@ urlpatterns = [
     path('event_details/<int:my_id>', views.event_details, name='event_details'),
     path('user_Details/<slug:username>',
          views.user_details, name='user_details'),
+
     # Event Booking
     path('booked/<int:e_id>', views.book_request, name='booking'),
     path('event_user/<int:event_id>',
@@ -36,6 +39,11 @@ urlpatterns = [
     path('event_user/<int:event_id>/<int:user_id>/certified',
          views.event_user_certified, name='event_user_certified'),
 
+    # Mybooking
+    path('my_event/', views.my_event, name='my_event'),
+    path('my_event/Requested', views.my_event_requested, name='my_event_requested'),
+    path('my_event/Conformed', views.my_event_conformed, name='my_event_conformed'),
+    path('my_event/Attended', views.my_event_attended, name='my_event_attended'),
 
 
 
