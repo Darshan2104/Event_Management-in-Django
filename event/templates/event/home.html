@@ -1,6 +1,10 @@
 {% extends "event/base.html" %}
 {% block content %}
-<a href="my_event">My Events</a>
+
+{%ifequal user.profile.usertype "Organizer" %}
+{% include 'event/event_view.html'%}
+{%else%}
+
 <h1 style="text-align: center;">List of all the Events</h1>
 <br />
 <br />
@@ -27,5 +31,5 @@
 
   </tbody>
 </table>
-
+{%endifequal%}
 {% endblock content %}
