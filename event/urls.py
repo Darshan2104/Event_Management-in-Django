@@ -39,7 +39,6 @@ urlpatterns = [
          views.event_user_certified, name='event_user_certified'),
 
     # Mybooking
-    #     path('my_event/', views.my_event, name='my_event'),
     path('my_event/Requested', views.my_event_requested, name='my_event_requested'),
     path('my_event/Conformed', views.my_event_conformed, name='my_event_conformed'),
     path('my_event/Attended', views.my_event_attended, name='my_event_attended'),

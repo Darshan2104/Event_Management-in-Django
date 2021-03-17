@@ -12,6 +12,7 @@ from .models import Eventlist, EventBook
 # Create your views here.
 
 
+@login_required
 def home(request):
 
     requser = request.user
@@ -63,7 +64,7 @@ def home(request):
     }
     return render(request, 'event/home.html', context)
 
-
+# CRUD on Event
 @login_required
 def event_add(request):
     return render(request, 'event/event_add.html', {})
@@ -97,10 +98,6 @@ def event_delete(request, my_id):
     return redirect('/event_view')
 
 
-def about(request):
-    return render(request, 'event/about.html', {'title': 'About'})
-
-
 def event_details(request, my_id):
     obj = Eventlist.objects.get(id=my_id)
     uid = request.user.id
@@ -113,14 +110,33 @@ def event_details(request, my_id):
 
 def user_details(request, username):
     obj = User.objects.get(username=username)
-    return render(request, 'event/userdetail.html', {'obj': obj})
+    obj1 = Eventlist.objects.filter(postby=obj)
+    obj2 = EventBook.objects.filter(userid=obj.id)
+    count = 0
+    for x in obj2:
+        if x.attended:
+            count += 1
+    total = len(obj1)
+    return render(request, 'event/userdetail.html', {'obj': obj, 'total': total, 'count': count})
+
+
+def event_user(request, event_id):
+    obj = EventBook.objects.filter(eventid=event_id)
+    eventdetail = Eventlist.objects.filter(id=event_id)
+    userdetail = []
+    for x in obj:
+        temp = User.objects.get(id=x.userid)
+        userdetail.append(temp)  # list of user object for this event
+    eventid = event_id
+    mylist = zip(obj, userdetail)
+    return render(request, 'event/manageEventUser.html', {'obj': obj, 'eventdetail': eventdetail, 'userdetail': userdetail, 'eventid': eventid, 'mylist': mylist})
 
 
 @login_required
 def book_request(request, e_id):
     requsrid = request.user.id
     obj = EventBook.objects.filter(userid=requsrid, eventid=e_id)
-# if empty then and then add new obj
+    # if empty then and then add new obj
     if obj:
         return redirect('/')
     else:
@@ -129,14 +145,6 @@ def book_request(request, e_id):
         obj = EventBook(userid=requsrid, eventid=eventid, booking=book)
         obj.save()
         return HttpResponseRedirect(reverse('event_details', args=[str(e_id)]))
-
-
-def event_user(request, event_id):
-    obj = EventBook.objects.filter(eventid=event_id)
-    eventdetail = Eventlist.objects.filter(id=event_id)
-    userdetail = User.objects.filter()
-    eventid = event_id
-    return render(request, 'event/manageEventUser.html', {'obj': obj, 'eventdetail': eventdetail, 'userdetail': userdetail, 'eventid': eventid})
 
 
 def event_user_conformation(request, event_id, user_id):
@@ -167,10 +175,7 @@ def event_user_certified(request, event_id, user_id):
     return redirect('event_user', event_id=str(event_id))
 
 
-def my_event(request):
-    return render(request, 'event/myevent.html')
-
-
+# User Profile section (Done!)
 def my_event_requested(request):
     uid = request.user.id
     obj = EventBook.objects.filter(userid=uid, booking=True)
@@ -205,3 +210,7 @@ def my_event_attended(request):
     for x in obj:
         print(x.certificate.url)
     return render(request, 'event/my_event_attended.html', {'mylist': mylist})
+
+
+def about(request):
+    return render(request, 'event/about.html', {'title': 'About'})

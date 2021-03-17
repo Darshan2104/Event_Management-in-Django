@@ -153,29 +153,8 @@
     </nav>
   </header>
   {%endif %}
-  <!-- <div class="content-section">
+  {% load crispy_forms_tags %}
 
-    {% load crispy_forms_tags %}
-
-    <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.email }}</p>
-        </div>
-    </div>
-    <form method="POST" enctype="multipart/form-data" action="/">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Profile Info</legend>
-            {{ u_form|crispy }}
-            {{ p_form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Upload</button>
-        </div>
-    </form>
-</div> -->
   <div class="container">
     <div class="row gutters">
       <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -260,7 +239,7 @@
 
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
-                    type="button" role="tab" aria-controls="messages" aria-selected="false">Confomed Event</button>
+                    type="button" role="tab" aria-controls="messages" aria-selected="false">Conformed Event</button>
                 </li>
 
                 <li class="nav-item" role="presentation">
