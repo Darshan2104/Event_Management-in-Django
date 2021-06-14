@@ -1,12 +1,22 @@
 # Event_Management-in-Django
 
-This is a project in which, 
+Developed in Django.
+
+**Features :**
+
 ```
-1.Participant can register them-self for event
-2.Organizer can organize an event
-3.Organizer can keep track of particulaer event which was added by him.
-4.Participant can keep track of his booked events
+ i.) Organizer Section- 
+      
+    1.Organizer can organize an event and keep track of it.(CRUD)
+    2.Manage participant(total participant on specific event, Conform booking of participant for event, certify participant)
+
+ii.) Participant Section-
+    
+    1.Participant can register them-self for event
+    2.Participant can keep track of his booked events
+    3.User Profile section
 ```
+
 **How to run?**
 1. Go to the folder which contains **manage.py**
 
@@ -27,5 +37,3 @@ python manage.py migrate
 ```
 python manage.py runserver
 ```
-
-Video Link : Cooming Soon
